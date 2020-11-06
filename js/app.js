@@ -1,6 +1,37 @@
 const form = document.getElementById('registrar');
 const input = form.querySelector('input'); //input inside registrar form
+const mainDiv = document.querySelector('.main');
 const ul = document.getElementById('invitedList');
+const div = document.createElement('div');
+const filterLabel = document.createElement('label');
+const filterCheckbox = document.createElement('input');
+
+filterLabel.textContent = `Hid those who haven't responded`;
+filterCheckbox.type = 'checkbox';
+div.appendChild(filterLabel);
+div.appendChild(filterCheckbox);
+mainDiv.insertBefore(div, ul);
+
+filterCheckbox.addEventListener('change', (event) => {
+	const isChecked = event.target.checked;
+	const lis = ul.children; //provides a reference to all the elements children
+
+	if (isChecked) {
+		for (let i = 0; i < lis.length; ++i) {
+			let li = lis[i];
+			if (li.className === 'responded') {
+				li.style.display = '';
+			} else {
+				li.style.display = 'none';
+			}
+		}
+	} else {
+		for (let i = 0; i < lis.length; ++i) {
+			let li = lis[i];
+			li.style.display = '';
+		}
+	}
+});
 
 const createLI = (text) => {
 	const li = document.createElement('li');
@@ -48,7 +79,7 @@ ul.addEventListener('change', (event) => {
 	checked ? (listItem.className = 'responded') : (listItem.className = '');
 });
 
-//delete or edit
+//delete, edit or save
 ul.addEventListener('click', (event) => {
 	if (event.target.tagName === 'BUTTON') {
 		const button = event.target;
