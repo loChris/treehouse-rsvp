@@ -4,7 +4,9 @@ const ul = document.getElementById('invitedList');
 
 const createLI = (text) => {
 	const li = document.createElement('li');
-	li.textContent = text;
+	const span = document.createElement('span');
+	span.textContent = text;
+	li.appendChild(span);
 
 	const label = document.createElement('label');
 	label.textContent = 'Confirmed';
@@ -52,11 +54,17 @@ ul.addEventListener('click', (event) => {
 		const button = event.target;
 		const li = button.parentNode;
 		const ul = li.parentNode;
+		const span = li.firstElementChild;
+		const input = document.createElement('input');
 
 		if (button.textContent === 'remove') {
 			ul.removeChild(li);
 		} else if (button.textContent === 'edit') {
-			console.log('edit');
+			input.type = 'text';
+			input.value = span.textContent;
+			li.insertBefore(input, span);
+			li.removeChild(span);
+			button.textContent = 'save';
 		}
 	}
 });
