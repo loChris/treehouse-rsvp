@@ -49,11 +49,13 @@ ul.addEventListener('change', (event) => {
 //delete or edit
 ul.addEventListener('click', (event) => {
 	if (event.target.tagName === 'BUTTON') {
-		if (event.target.textContent === 'remove') {
-			const li = event.target.parentNode;
-			const ul = li.parentNode;
+		const button = event.target;
+		const li = button.parentNode;
+		const ul = li.parentNode;
+
+		if (button.textContent === 'remove') {
 			ul.removeChild(li);
-		} else if (event.target.textContent === 'edit') {
+		} else if (button.textContent === 'edit') {
 			console.log('edit');
 		}
 	}
