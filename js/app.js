@@ -15,9 +15,13 @@ const createLI = (text) => {
 	label.appendChild(checkbox);
 	li.appendChild(label);
 
-	const button = document.createElement('button');
-	button.textContent = 'remove';
-	li.appendChild(button);
+	const editButton = document.createElement('button');
+	editButton.textContent = 'edit';
+	li.appendChild(editButton);
+
+	const removeButton = document.createElement('button');
+	removeButton.textContent = 'remove';
+	li.appendChild(removeButton);
 
 	return li;
 };
@@ -33,6 +37,7 @@ form.addEventListener('submit', (event) => {
 	ul.appendChild(li);
 });
 
+//checkbox change style
 ul.addEventListener('change', (event) => {
 	const checkbox = event.target;
 	const checked = checkbox.checked;
@@ -41,10 +46,15 @@ ul.addEventListener('change', (event) => {
 	checked ? (listItem.className = 'responded') : (listItem.className = '');
 });
 
+//delete or edit
 ul.addEventListener('click', (event) => {
 	if (event.target.tagName === 'BUTTON') {
-		const li = event.target.parentNode;
-		const ul = li.parentNode;
-		ul.removeChild(li);
+		if (event.target.textContent === 'remove') {
+			const li = event.target.parentNode;
+			const ul = li.parentNode;
+			ul.removeChild(li);
+		} else if (event.target.textContent === 'edit') {
+			console.log('edit');
+		}
 	}
 });
