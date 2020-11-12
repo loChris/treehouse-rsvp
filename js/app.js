@@ -92,27 +92,34 @@ document.addEventListener('DOMContentLoaded', (event) => {
 			const button = event.target;
 			const li = button.parentNode;
 			const ul = li.parentNode;
+			const action = button.textContent; //checks the text content of a button for use in calling a nameAction
+			const nameActions = {
+				remove: () => {
+					ul.removeChild(li);
+				},
+				edit: () => {
+					const span = li.firstElementChild;
+					const input = document.createElement('input');
 
-			if (button.textContent === 'remove') {
-				ul.removeChild(li);
-			} else if (button.textContent === 'edit') {
-				const span = li.firstElementChild;
-				const input = document.createElement('input');
+					input.type = 'text';
+					input.value = span.textContent;
+					li.insertBefore(input, span);
+					li.removeChild(span);
+					button.textContent = 'save';
+				},
+				save: () => {
+					const input = li.firstElementChild;
+					const span = document.createElement('span');
 
-				input.type = 'text';
-				input.value = span.textContent;
-				li.insertBefore(input, span);
-				li.removeChild(span);
-				button.textContent = 'save';
-			} else if (button.textContent === 'save') {
-				const input = li.firstElementChild;
-				const span = document.createElement('span');
+					span.textContent = input.value;
+					li.insertBefore(span, input);
+					li.removeChild(input);
+					button.textContent = 'edit';
+				},
+			};
 
-				span.textContent = input.value;
-				li.insertBefore(span, input);
-				li.removeChild(input);
-				button.textContent = 'edit';
-			}
+			//executes a function in nameActions depending on the text content of a button clicked if it matches one of the actions
+			nameActions[action]();
 		}
 	});
 });
